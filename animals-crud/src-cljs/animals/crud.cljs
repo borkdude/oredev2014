@@ -80,7 +80,7 @@
              :onChange (field-input-handler atom key)}]
     [:p (get @atom key)]))
 
-(def editable-input (with-meta editable-input
+#_(def editable-input (with-meta editable-input
                       {:component-did-mount (fn [this] (println "will mount"))
                        :component-will-unmount (fn [this] (println "unmount"))}))
 
