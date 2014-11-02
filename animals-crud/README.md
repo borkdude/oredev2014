@@ -1,8 +1,4 @@
-# FPAMSCLJ
-
-Comparative example of Reagent and Om.
-
-[Slides](https://docs.google.com/presentation/d/1fTZOvM6DufKI1anmjjbaknzV8epKGvAYEf4o0qvZ56A/edit)
+# Animals CRUD
 
 ## Running the project (with figwheel and weasel)
 
