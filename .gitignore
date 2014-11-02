@@ -12,4 +12,5 @@ target
 .nrepl-port
 .repl/
 repl/
-js/todos_prod.js
+todo-cljs/resources/public/js/todos.js
+todo-cljs/resources/public/js/todos-prod.js
