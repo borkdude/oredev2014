@@ -27,7 +27,7 @@
   (ANY "/animals"
        [name species]
        (resource
-        :available-media-types ["application/edn" "application/json"]
+        :available-media-types ["application/edn"]
         :allowed-methods [:get :post]
         :handle-ok (fn [ctx]
                      (let [found (animals/read)]

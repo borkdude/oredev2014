@@ -1,4 +1,5 @@
-(ns animals.db)
+(ns animals.db
+  (:refer-clojure :exclude [read]))
 
 (defonce max-id (atom 0))
 
@@ -17,16 +18,15 @@
   ([id]
      (get (deref records) id))
   ([k v]
-     (filter #(= (get % k) v) (vals (deref records)))))
+     (filter #(= (get % k) v) (vals @records))))
 
 (defn update!
   [id m]
-  (when (contains? (deref records) id)
-    (swap! records update-in [id] merge m)
-    nil))
+  (swap! records
+         #(if (% id)
+            (update-in % [id] merge m)
+            %)))
 
 (defn delete!
   [id]
-  (if (contains? (deref records) id)
-    (swap! records dissoc id)
-    nil))
+  (swap! records dissoc id))

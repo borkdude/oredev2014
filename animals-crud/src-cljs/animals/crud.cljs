@@ -22,8 +22,7 @@
              (println "reloaded")))
           #_(ws-repl/connect "ws://localhost:9001" :verbose true)))))
 
-(defonce animals-state (atom #{{:name "boom", :species "pies", :type :animal, :id 30}
-                               }))
+(defonce animals-state (atom #{}))
 
 ;; fire off go loop only once
 (go (let [response
