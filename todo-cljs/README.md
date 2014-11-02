@@ -22,12 +22,17 @@ then open `http://0.0.0.0:8888/` in your browser to visit the application.
 To start a browser repl (Weasel):
 
 ```
-$ lein repl
-$ (brepl)
+lein repl
+(brepl)
+(ns todo-cljs.todos)
 ```
 
 and refresh the browser. After this you can evaluate expressions against the browser.
+For example:
 
+```
+(add-todo "Todo from REPL")
+```
 
 ## License
 
