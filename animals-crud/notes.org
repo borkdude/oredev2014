@@ -1,0 +1,4 @@
+* Notes on ClojureScript history
+  Release June 20th
+  It worked, but a lot of rough edges.
+  Data structures were copy on write, not shared.
