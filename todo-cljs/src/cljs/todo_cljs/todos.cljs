@@ -15,11 +15,11 @@
 
 (def ENTER_KEY 13)
 (def STORAGE_NAME "todos-cljs")
-(def todo-list (atom [])) ;; ALL APPLICATION STATE LIVES HERE
+(def app-state (atom []))
 
 (declare rerender)
 
-(add-watch todo-list ::rerender
+(add-watch app-state ::rerender
            (fn [k a o n]
              (rerender o n)))
 
@@ -27,13 +27,13 @@
 
 (defn save-todos []
   (.setItem js/localStorage STORAGE_NAME
-            (pr-str @todo-list)))
+            (pr-str @app-state)))
 
 (defn load-todos []
   (let [local-storage (.getItem js/localStorage STORAGE_NAME)]
     (if (empty? local-storage)
-      (reset! todo-list [])
-      (reset! todo-list
+      (reset! app-state [])
+      (reset! app-state
               (cljs.reader/read-string local-storage)))))
 
 ;; HELPER: shortcut for dom/get-element
@@ -41,20 +41,20 @@
 
 ;; HELPER: :total tasks, :completed tasks and :left tasks (not completed)
 (defn stats []
-  (let [total     (count @todo-list)
-        completed (count (filter #(= true (% :completed)) @todo-list))
+  (let [total     (count @app-state)
+        completed (count (filter #(= true (% :completed)) @app-state))
         left      (- total completed)]
     {:total total :completed completed :left left}))
 
 ;; HELPER: updates a todo by its id, changes puts a new val for the attr
 (defn update-attr [id attr val]
   (let [updated
-        (vec (map #(if (= (% :id) id) (conj % {attr val}) %) @todo-list))]
-    (reset! todo-list updated)))
+        (vec (map #(if (= (% :id) id) (conj % {attr val}) %) @app-state))]
+    (reset! app-state updated)))
 
 (defn remove-todo-by-id [id]
-  (reset! todo-list
-          (vec (filter #(not= (% :id) id) @todo-list))))
+  (reset! app-state
+          (vec (filter #(not= (% :id) id) @app-state))))
 
 ;; UI and handlers
 
@@ -96,7 +96,7 @@
 (defn redraw-todos-ui []
   (dom/remove-children "todo-list")
   (dom/set-value (by-id "new-todo") "")
-  (doseq [todo @todo-list]
+  (doseq [todo @app-state]
       (let [
         id          (todo :id)
         li          (element "li" {:id (str "li_" id)})
@@ -136,7 +136,7 @@
     (dom/append footer remaining)))
 
 (defn clear-click-handler []
-  (reset! todo-list (filter #(not (% :completed)) @todo-list)))
+  (reset! app-state (filter #(not (% :completed)) @app-state)))
 
 (defn draw-todo-clear []
   (let [footer (by-id "footer")
@@ -147,7 +147,7 @@
 
 (defn redraw-status-ui []
   (let [footer  (by-id "footer")
-        display (if (empty? @todo-list) "none" "block")
+        display (if (empty? @app-state) "none" "block")
         stat (stats)]
     (dom/remove-children "footer")
     (dom/set-properties footer {"style" (str "display:" display)})
@@ -156,7 +156,7 @@
 
 (defn change-toggle-all-checkbox-state []
   (let [toggle-all  (by-id "toggle-all")
-        all-checked (every? #(= true (% :completed)) @todo-list)]
+        all-checked (every? #(= true (% :completed)) @app-state)]
     (set! (.-checked toggle-all) all-checked)))
 
 (defn rerender [o n]
@@ -186,7 +186,7 @@
 (defn add-todo [text]
   (let [tt (.trim text)]
     (if (seq tt)
-      (swap! todo-list conj
+      (swap! app-state conj
              {:id (get-uuid)
               :title tt
               :completed false}))))
@@ -197,8 +197,8 @@
 
 (defn toggle-all-handler [ev]
   (let [checked (.-checked (.-target ev))
-        toggled (map #(assoc % :completed checked) @todo-list)]
-    (reset! todo-list toggled)))
+        toggled (map #(assoc % :completed checked) @app-state)]
+    (reset! app-state toggled)))
 
 (defn add-event-listeners []
   (ev/listen (by-id "new-todo") "keypress" new-todo-handler)
@@ -222,5 +222,4 @@
 ;; (add-todo "one")
 ;; (add-todo "two")
 ;; (add-todo "three")
-;; (map #(js/alert %) @todo-list)
-
+;; (map #(js/alert %) @app-state)
