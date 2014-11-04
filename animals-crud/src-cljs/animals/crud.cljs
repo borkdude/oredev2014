@@ -24,7 +24,7 @@
 
 (defonce animals-state (atom #{}))
 
-;; fire off go loop only once
+;; initial call to get animals from server
 (go (let [response
           (<! (http/get "/animals"))
           data (:body response)]
