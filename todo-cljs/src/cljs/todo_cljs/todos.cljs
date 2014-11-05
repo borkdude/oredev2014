@@ -163,8 +163,8 @@
   ;; calculate some diff between old and new and do clever update...
   (let [diff-o (set/difference (set o) (set n))
         diff-n (set/difference (set n) (set o))]
-    (println "diff-o" diff-o)
-    (println "diff-n" diff-n)
+    #_(println "diff-o" diff-o)
+    #_(println "diff-n" diff-n)
     ;; for now just naive rerendering
     (when (not= o n)
       (save-todos)
