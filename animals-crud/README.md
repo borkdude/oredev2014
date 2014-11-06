@@ -4,7 +4,7 @@
 
 In one terminal:
 
-    lein figwheel (om|reagent)
+    lein figwheel
 
 In another:
 
