@@ -31,6 +31,10 @@
       (reset! animals-state (set data))))
 
 ;;; crud operations
+
+(defn remove-by-id [s id]
+  (set (remove #(= id (:id %)) s)))
+
 (defn add-animal! [a]
   (go (let [response
             (<! (http/post "/animals" {:edn-params
@@ -43,7 +47,7 @@
                                   (:id a))))]
         (if (= (:status response)
                  200)
-          (swap! animals-state disj a)))))
+          (swap! animals-state remove-by-id (:id a))))))
 
 (defn update-animal! [a]
   (go (let [response
@@ -53,10 +57,7 @@
         (swap! animals-state
                (fn [old-state]
                  (conj
-                   (set (filter (fn [other]
-                                  (not= (:id other)
-                                        (:id a)))
-                                old-state))
+                   (remove-by-id old-state (:id a))
                    updated-animal))))))
 ;;; end crud operations
 
