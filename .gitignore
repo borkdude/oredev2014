@@ -13,4 +13,4 @@ target
 .repl/
 repl/
 todo-cljs/resources/public/js/
-resources/public/crud.js
+animals-crud/resources/public/crud.js
