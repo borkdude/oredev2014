@@ -14,13 +14,13 @@
   ;; reload
   (go (let [body (:body (<! (http/get "/is-dev")))]
         (when (= body true) ;; has to match exactly true and not some string
-          (println "dev mode is on")
-          #_(fw/watch-and-reload
+          (println "dev mode is on!")
+          (fw/watch-and-reload
            :websocket-url   "ws://localhost:3449/figwheel-ws"
            :jsload-callback
            (fn []
              (println "reloaded")))
-          #_(ws-repl/connect "ws://localhost:9001" :verbose true)))))
+          (ws-repl/connect "ws://localhost:9001" :verbose true)))))
 
 (defonce animals-state (atom #{}))
 
