@@ -12,11 +12,8 @@ In another:
 
 To interact from the browser REPL:
 
-```
-$ cd example
-$ lein repl
-example.api=> (brepl) ;; starts browser repl
-```
+    lein repl
+    example.api=> (brepl) ;; starts browser repl
 
 Finally browse to
 [http://localhost:8090/index.html](http://localhost:8090/index.html)
