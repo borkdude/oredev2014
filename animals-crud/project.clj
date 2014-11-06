@@ -17,7 +17,7 @@
                  [om "0.7.1"]
                  [figwheel "0.1.4-SNAPSHOT"]
                  [com.cemerick/piggieback "0.1.3"]
-                 [weasel "0.4.0-SNAPSHOT"]
+                 [weasel "0.4.2-SNAPSHOT"]
                  [environ "1.0.0"]]
 
   :plugins [[lein-ring "0.8.11"]
